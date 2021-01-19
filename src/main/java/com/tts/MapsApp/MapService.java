@@ -33,9 +33,27 @@ public class MapService {
 			location.setState("Noplace");
 		} else {
 			List<AddressComponents> components = response.getResults().get(0).getAddress_components();
-			location.setCity(response.getResults().get(0).getFormatted_address());
-			// location.setCity(components.get(0).getLong_name());
-			location.setState(components.get(0).getLong_name());
+			String city = "Unknown city";
+			String state = "Unknown state";
+			for (AddressComponents component : components) {
+
+				for (String search : component.types) {
+
+					switch (search) {
+						case "locality":
+							city = component.getLong_name();
+							break;
+						case "administrative_area_level_1":
+							state = component.getLong_name();
+							break;
+						default:
+							break;
+					}
+				}
+			}
+
+			location.setCity(city);
+			location.setState(state);
 		}
 	}
 
