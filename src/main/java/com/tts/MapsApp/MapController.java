@@ -14,13 +14,13 @@ public class MapController {
 	@Autowired
 	private MapService mapService;
 
-	@GetMapping("/home")
+	@GetMapping("/")
 	public String getDefaultMap(Model model) {
 		model.addAttribute(new Location());
 		return "index";
 	}
 
-	@PostMapping("/home")
+	@PostMapping("/")
 	public String getMapForLocation(@RequestParam String Submit, Location location, Model model) {
 		if (Submit.equals("Submit")) {
 			mapService.addCoordinates(location);
